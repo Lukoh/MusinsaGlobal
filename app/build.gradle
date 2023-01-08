@@ -1,0 +1,397 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'kotlin-allopen'
+    id 'jacoco'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
+}
+
+android {
+    namespace 'com.goforer.musinsaGlobalTest'
+    compileSdk 33
+    buildToolsVersion "30.0.3"
+
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
+
+    defaultConfig {
+        applicationId "com.goforer.musinsaglobaltest"
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        ndk.abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'arm64-v8a'
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+                    outputs.upToDateWhen { false }
+                    exceptionFormat = 'full'
+                    showStandardStreams = true
+                }
+
+                useJUnitPlatform()
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            lintOptions {
+                checkReleaseBuilds false
+                checkDependencies true
+            }
+
+            FirebasePerformance {
+                // Set this flag to 'false' to disable @AddTrace annotation processing and
+                // automatic HTTP/S network request monitoring
+                // for a specific build variant at compile time.
+                instrumentationEnabled false
+            }
+
+            initWith debug
+            jniDebuggable true
+            minifyEnabled false
+            shrinkResources false
+//            testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
+            testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            lintOptions {
+                checkReleaseBuilds false
+                checkDependencies true
+            }
+
+            //ndkVersion "22.0.6917172"
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
+
+            FirebasePerformance {
+                // Set this flag to 'false' to disable @AddTrace annotation processing and
+                // automatic HTTP/S network request monitoring
+                // for a specific build variant at compile time.
+                instrumentationEnabled false
+            }
+
+            initWith release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+
+        kotlinOptions {
+            suppressWarnings = true
+            jvmTarget = '11'
+            jvmTarget = JavaVersion.VERSION_11
+            apiVersion = '1.5'
+            languageVersion = '1.5'
+            freeCompilerArgs += [
+                    "-opt-in=kotlin.RequiresOptIn",
+                    "-opt-in=kotlin.OptIn",
+                    "-Xjvm-default=all"
+            ]
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    sourceSets {
+        String sharedTestDir = 'src/commonTest/kotlin'
+        main {
+            main.java.srcDirs += 'src/main/kotlin'
+            test.java.srcDirs += 'src/test/kotlin'
+            test.java.srcDirs += sharedTestDir
+            androidTest.java.srcDirs += 'src/androidTest/kotlin'
+            androidTest.java.srcDirs += sharedTestDir
+            resources.srcDirs += ['src/commonTest/resources']
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        prod {
+            dimension "default"
+            manifestPlaceholders = [appNameGradle: "MusinsaGlobalTest"]
+            manifestPlaceholders = [appLabel: "@string/app_name"]
+            buildConfigField "String", "apiServer", "\"https://meta.musinsa.com/\""
+        }
+
+        stg {
+            dimension "default"
+            applicationIdSuffix = ".stg"
+            manifestPlaceholders = [appNameGradle: "MusinsaGlobalTest_stg"]
+            manifestPlaceholders = [appLabel: "MusinsaGlobalTest_Stg"]
+            buildConfigField "String", "apiServer", "\"https://meta.musinsa.com/\""
+        }
+
+        dev {
+            dimension "default"
+            applicationIdSuffix = ".dev"
+            manifestPlaceholders = [appNameGradle: "MusinsaGlobalTest_Dev"]
+            manifestPlaceholders = [appLabel: "MusinsaGlobalTest_Dev"]
+            buildConfigField "String", "apiServer", "\"https://meta.musinsa.com/\""
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'arm64-v8a'
+            universalApk true
+        }
+    }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
+    implementation 'com.google.android.material:material:1.7.0'
+
+    implementation "androidx.multidex:multidex:$androidx_multidex_version"
+
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.fragment:fragment-ktx:$arch_fragment_version"
+    implementation "androidx.activity:activity-ktx:$arch_activity_version"
+    implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_extension_version"
+    // Lifecycles only (no ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$arch_lifecycle_runtime_ktx"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_lifecycle_ktx"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$arch_lifecycle_viewmodel_savedstate"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$arch_lifecycle_version"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.6.4"
+
+    implementation "androidx.lifecycle:lifecycle-runtime-testing:$arch_lifecycle_version"
+
+    implementation 'androidx.browser:browser:1.4.0'
+
+    implementation 'com.google.code.gson:gson:2.10'
+
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    // define a BOM and its version
+    implementation(platform('com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.11'))
+
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation('com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11')
+
+    implementation 'com.squareup.okio:okio:3.2.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+
+    implementation('io.coil-kt:coil:2.2.2')
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Debuging Network & Resources
+    implementation 'com.facebook.stetho:stetho:1.6.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.6.0'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
+    implementation "androidx.navigation:navigation-fragment-ktx:$arch_nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$arch_nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$arch_nav_version"
+
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    implementation('io.coil-kt:coil:2.2.2')
+
+    // Json Logging
+    implementation 'com.orhanobut:logger:2.2.0'
+
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'org.mockito:mockito-core:4.11.0'
+    testImplementation 'org.mockito:mockito-inline:4.11.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
+    // (Optional) If you need "Parameterized Tests"
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.1'
+
+    // (Optional) If you also have JUnit 4-based tests
+    testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.9.1'
+
+    // (Required) Writing and executing Unit Tests on the JUnit Platform
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+
+    // Jupiter API & Test Runner, if you don't have it already
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+
+    // Robolectric for test context
+    testImplementation 'org.robolectric:robolectric:4.9.2'
+
+    // The instrumentation test companion libraries
+    androidTestImplementation 'de.mannodermaus.junit5:android-test-core:1.3.0'
+    androidTestRuntimeOnly 'de.mannodermaus.junit5:android-test-runner:1.3.0'
+
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'com.google.truth:truth:1.1.3'
+    androidTestUtil 'androidx.test:orchestrator:1.4.2'
+
+    testImplementation('com.squareup.okhttp3:mockwebserver:5.0.0-alpha.11')
+
+    debugImplementation "androidx.fragment:fragment-testing:$arch_fragment_testing_version"
+    debugImplementation 'androidx.test:core:1.5.0'
+
+    // Required for instrumented tests
+    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+    // For App Authentication API testing
+    androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
+
+    implementation 'commons-io:commons-io:20030203.000550'
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+}
+
+project.afterEvaluate {
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect { type -> type.name }
+    def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+
+    // When no product flavors defined, use empty
+    if (!productFlavors) productFlavors.add('')
+
+    productFlavors.each { productFlavorName ->
+        buildTypes.each { buildTypeName ->
+            def sourceName, sourcePath
+            if (!productFlavorName) {
+                sourceName = sourcePath = "${buildTypeName}"
+            } else {
+                sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+                sourcePath = "${productFlavorName}/${buildTypeName}"
+            }
+            def testTaskName = "test${sourceName.capitalize()}UnitTest"
+
+            // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            task "${testTaskName}Coverage"(type: JacocoReport, dependsOn: "$testTaskName") {
+                group = "Reporting"
+                description = "Generate Jacoco coverage reports on the ${sourceName.capitalize()} build."
+
+                def excludes = [
+                        '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*',
+                        '**/*Test*.*', 'android/**/*.*',
+                        '**/*_MembersInjector.class',
+                        '**/Dagger*Component.class',
+                        '**/Dagger*Component$Builder.class',
+                        '**/*_*Factory.class',
+                        '**/*ComponentImpl.class',
+                        '**/*SubComponentBuilder.class',
+                        '**/AppFireBaseMessagingService.class',
+                        '**/caller/*',
+                        '**/di/*',
+                        '**/view/*',
+                        '**/ui/*'
+                ]
+
+                classDirectories.from = fileTree(
+                        dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
+                        excludes: excludes
+                ) + fileTree(
+                        dir: "${project.buildDir}/tmp/kotlin-classes/${sourceName}",
+                        excludes: excludes
+                )
+
+                def coverageSourceDirs = [
+                        "src/main/java",
+                        "src/$productFlavorName/java",
+                        "src/$buildTypeName/java"
+                ]
+                additionalSourceDirs.from = files(coverageSourceDirs)
+                sourceDirectories.from = files(coverageSourceDirs)
+                executionData.from = files("${project.buildDir}/jacoco/${testTaskName}.exec")
+
+                reports {
+                    xml.enabled = true
+                    html.enabled = true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimaryDark">#EFFDFDFE</color>
+    <color name="colorSecondary">#993C3C43</color>
+    <color name="colorSeparator">#DDDEDE</color>
+    <color name="colorSystemBlue">#007AFF</color>
+    <color name="colorSystemRed">#FF3B30</color>
+    <color name="colorSystemGray1">#8E8E93</color>
+    <color name="colorSystemGray2">#AEAEB2</color>
+    <color name="colorSystemGray3">#C7C7CC</color>
+    <color name="colorSystemGray4">#D1D1D6</color>
+    <color name="colorSystemGray5">#E5E5EA</color>
+    <color name="colorSystemGray6">#F2F2F7</color>
+    <color name="colorSystemGray7">#8F96A1</color>
+    <color name="colorSystemGray8">#979797</color>
+    <color name="colorSystemGray9">#DEDEDE</color>
+    <color name="colorSystemGray10">#F7F8FF</color>
+
+    <color name="colorText1">#9C9C9E</color>
+    <color name="colorText2">#FF000000</color>
+    <color name="colorText3">#5C5C5E</color>
+    <color name="colorText4">@color/colorSystemGray10</color>
+
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorBg">@color/colorSystemGray10</color>
+    <color name="colorHighLight">#F2F2F2</color>
+    <color name="colorDialogBtnText">@color/colorSystemBlue</color>
+    <color name="colorDlgBg">@color/colorSystemGray6</color>
+</resources>

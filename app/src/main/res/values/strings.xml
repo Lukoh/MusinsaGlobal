@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MusinsaGlobalTest</string>
+
+    <string name="goods_list_fragment_label">Goods List</string>
+    <string name="confirm">확인</string>
+    <string name="ok">OK</string>
+
+    <string name="network_error_message">네트워크 연결 상태를 확인해주세요.</string>
+
+    <string name="goods_list">무신사 글로벌</string>
+    <string name="style_list">스타일 리스트</string>
+
+    <string name="header_all">전체\u0020ᐳ</string>
+    <string name="goods_coupon">쿠폰</string>
+
+    <string name="banner_count">%d / %d \u0020ᐳ</string>
+    <string name="banner_reached_max">%d / %d</string>
+
+    <string name="style_all">추천 코디 전체\u0020\u0020ᐳ</string>
+
+    <string name="scroll_price">%s 원</string>
+    <string name="scroll_sale_rate">%s %%</string>
+
+    <string name="content_footer_more">더보기</string>
+    <string name="content_footer_refresh">새로운 추천</string>
+</resources>

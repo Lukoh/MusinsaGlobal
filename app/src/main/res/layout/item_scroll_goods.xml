@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_goods"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_brand_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_4"
+            android:adjustViewBounds="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0"
+            android:lineHeight="18sp"
+            android:textColor="@color/colorText1"
+            android:textSize="13sp"
+            android:textStyle="normal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="나이키 운동화" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_4"
+            android:adjustViewBounds="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0"
+            android:lineHeight="18sp"
+            android:textColor="@color/colorText2"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_brand_name"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="300,000원"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sale_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginStart="@dimen/dp_10"
+            android:adjustViewBounds="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0"
+            android:lineHeight="18sp"
+            android:textColor="@color/colorSystemRed"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_brand_name"
+            app:layout_constraintStart_toEndOf="@+id/tv_price"
+            tools:text="30%" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingBottom="@dimen/dp_2"
+            android:paddingStart="@dimen/dp_4"
+            android:paddingEnd="@dimen/dp_4"
+            android:background="@color/colorSystemBlue"
+            android:adjustViewBounds="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0"
+            android:lineHeight="18sp"
+            android:text="@string/goods_coupon"
+            android:textColor="@color/colorText4"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintTop_toBottomOf="@+id/tv_brand_name"
+            app:layout_constraintStart_toEndOf="@+id/tv_sale_rate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
