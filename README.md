@@ -22,19 +22,23 @@ MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/Advanced
 
 **5. [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started)**
 
-**6. [Kotlin Couroutine](https://developer.android.com/kotlin/coroutines)**
+**6. [ViewBinding](https://developer.android.com/topic/libraries/view-binding)**
 
-**7. [Kotlin Flow(HotFlow & ColdFlow)](https://developer.android.com/kotlin/flow)**
+**7. [Kotlin Couroutine](https://developer.android.com/kotlin/coroutines)**
 
-**8. [Retrofit Library](https://square.github.io/retrofit/)**
+**8. [Kotlin Flow(HotFlow & ColdFlow)](https://developer.android.com/kotlin/flow)**
 
-**9. [OkHttp](https://square.github.io/okhttp/)**
+**9. [Retrofit Library](https://square.github.io/retrofit/)**
 
-**10. [Coil Image Loading Library](https://coil-kt.github.io/coil/)**
+**10. [OkHttp](https://square.github.io/okhttp/)**
 
-**11. [Gson](https://github.com/google/gson)**
+**11. [Coil Image Loading Library](https://coil-kt.github.io/coil/)**
 
-**12. [Chrome Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/)**
+**12. [Gson](https://github.com/google/gson)**
+
+**13. [Chrome Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/)**
+
+Jetpack 라이브러러인 Compose 학습을 계획하고 있습니다. (2월 초에 현재 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 의 데모앱인 [Weather](https://github.com/Lukoh/Weather)에 적용 시작할 예정입니다.)
 
 
 MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 기반으로 개발된 Android 앱입니다. 또한 Clean Architecture & Clean Code 기반으로 개발되어 있고 앱을 확장하거나 유지보수 용이하고, 개발 생산성을 높일수 있는 구조를 가지고 있습니다. [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 기반으로 앱을 개발하면 비지니스 로직과 UI Layout 만 새로 적용하면 여러용도의 서로 다른 앱을 쉽게 안정성 있게, 그리고 빠르게 개발을 할수 았습니다.
