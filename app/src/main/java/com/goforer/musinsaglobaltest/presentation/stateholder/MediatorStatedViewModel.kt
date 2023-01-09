@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 open class MediatorStatedViewModel(private val useCase: RepoUseCase, params: Params) : ViewModel() {
+    // You can implement code blow:
+    // Just please visit below link if you'd like to know [StatFlow & SharedFlow]
+    // Link : https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
     /*
     val value = useCase.run(viewModelScope, params).flatMapLatest {
         flow {
@@ -23,10 +26,6 @@ open class MediatorStatedViewModel(private val useCase: RepoUseCase, params: Par
     )
 
      */
-
-    // You can implement code blow:
-    // Just please visit below link if you'd like to know [StatFlow & SharedFlow]
-    // Link : https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
 
     fun invalidatePagingSource() = useCase.invalidatePagingSource()
 
