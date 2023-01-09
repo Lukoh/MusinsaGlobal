@@ -10,7 +10,7 @@
 
 # MusinsaGlobal
 
-MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 및 [LukohSplash](https://github.com/Lukoh/LukohSplash) 및 Android 최신 아키텍처 구성 요소인 Jetpack을 기반으로 하며 MVVM 디자인 패턴을 따르고 있습니다. 또한 MusinsaGlobal 앱 아키텍처는 프리젠테이션 계층, 도메인 계층 및  계층으로 구성되어 있습니다. 그리고 MusinsaGlobal 앱에는 Advanced Android App Architecture로 새로운 Android App 개발을 위한 최신 기술이 적용되었습니다. 이러한 새로운 기술들이 안드로이드 앱이 확장되어 더욱 경쟁력 있고 일관성을 유지하도록 도와줍니다. 또한 MusinsaGlobal App 의 모든 모듈에 Kotlin 언어를 적용하고 있으며 대부분의 코드가 Kotlin으로 작성되어 있습니다. 이 MusinsaGlobal 앱 개발하기 위해서 사용된 기술스택은 아래와 같습니다:
+MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 및 [LukohSplash](https://github.com/Lukoh/LukohSplash) 및 Android 최신 아키텍처 구성 요소인 Jetpack을 기반으로 하며 MVVM 디자인 패턴을 따르고 있습니다. 또한 MusinsaGlobal 앱 아키텍처는 프리젠테이션 계층, 도메인 계층 및  계층으로 구성되어 있습니다. 그리고 MusinsaGlobal 앱에는 Advanced Android App Architecture로 새로운 Android App 개발을 위한 최신 기술이 적용되었습니다. 또한 작게 나누어 개발하려고 노력했습니다. 작게 나누어져 있으면 문제를 빨리 발견할 수 있고, 확장성에도 강점을 가집니다. 이러한 새로운 기술들이 안드로이드 앱이 확장되어 더욱 경쟁력 있고 일관성을 유지하도록 도와줍니다. 또한 MusinsaGlobal App 의 모든 모듈에 Kotlin 언어를 적용하고 있으며 대부분의 코드가 Kotlin으로 작성되어 있습니다. 이 MusinsaGlobal 앱 개발하기 위해서 사용된 기술스택은 아래와 같습니다:
 
 **1. [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)** 
 
@@ -40,8 +40,10 @@ MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/Advanced
 
 Jetpack 라이브러러인 Compose 학습을 계획하고 있습니다. (2월 초에 현재 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 의 데모앱인 [Weather](https://github.com/Lukoh/Weather)에 적용 시작할 예정입니다.)
 
+추가적으로 Style 컨텐츠에 추천코디 전체를 클릭하면 추천코디의 전체 코디의 리스트를 보여주는 추가 기능도 구현하였습니다.
 
-MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) Architecture 기반으로 개발된 Android 앱입니다. 또한 Clean Architecture & Clean Code 기반으로 개발되어 있고 앱을 확장하거나 유지보수 용이하고, 개발 생산성을 높일수 있는 구조를 가지고 있습니다. [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 기반으로 앱을 개발하면 비지니스 로직과 UI Layout 만 새로 적용하면 여러용도의 서로 다른 앱을 쉽게 안정성 있게, 그리고 빠르게 개발을 할수 았습니다.
+
+MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) Architecture 기반으로 개발된 Android 앱입니다. 또한 Clean Architecture & Clean Code 기반으로 개발되어 있고 앱을 확장하거나 유지보수 용이하고, 개발 생산성을 높일수 있는 구조를 가지고 있습니다. [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 기반으로 앱을 개발하면 비지니스 로직과 UI Layout 만 새로 적용하면 여러용도의 서로 다른 앱을 쉽게 안정성 있게, 그리고 빠르게 개발을 할수 았습니다. ([AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) Architecture 는 ShareableAsset 앱 과 OHeadline 앱 서비스 개발에도 적용된 Architecture 로써 코드 생산성 & 유지보수 & 확장성 & 호율성에 강점을 가진 Android 앱을 개발하긴 위한 좋은 App Architecture 입니다.)
 
 아래 내용들은 제가 제 [Mediem](https://medium.com/@lukohnam) 에 올린 좋은 아키텍쳐 기반에서 앱을 개발 하는 방법들에 관한 기술글들입니다. 약 3년전 개발된 AppArchitecture 를 기반으로 LukohSplash 를 개발하였고, MusinsaGlobal 앱은 LukohSplash 를 좀더 개선한 AdvancedAppArchitecture 를 기반으로 개발되었습니다. 제 기술 스택을 참고하시려면 [LukohSplahs](https://github.com/Lukoh/LukohSplash) 와 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 를 참고해 주십시요.
 
