@@ -1,7 +1,6 @@
 package com.goforer.musinsaglobaltest.presentation.ui
 
 import android.content.*
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -125,26 +123,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), Injectable {
     }
 
     protected fun isNavControllerInitialized() = ::navController.isInitialized
-
-    protected fun setDarkMode(state: Boolean) {
-        /*
-        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
-         */
-
-        if (state) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            resources.configuration.uiMode = Configuration.UI_MODE_NIGHT_YES
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            resources.configuration.uiMode = Configuration.UI_MODE_NIGHT_NO
-        }
-    }
 
     private fun showDefaultDialog(
         message: CharSequence, title: CharSequence? = null,
