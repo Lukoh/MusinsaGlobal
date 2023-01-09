@@ -5,7 +5,7 @@
 </p>
 
 <p align="left">
-:eyeglasses: The MusinsaGlobal Test contributor, Lukoh.
+:eyeglasses: The MusinsaGlobal Test contributor, Lukoh().
 </p><br>
 
 # MusinsaGlobal
