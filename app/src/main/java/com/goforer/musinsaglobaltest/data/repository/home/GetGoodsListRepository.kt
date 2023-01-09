@@ -14,7 +14,7 @@ class GetGoodsListRepository
 @Inject
 constructor() : Repository<Resource>() {
     override fun handle(viewModelScope: CoroutineScope, query: Query) = object :
-        DataMediator<GoodsListResponse>(viewModelScope, false) {
+        DataMediator<GoodsListResponse>(viewModelScope) {
         override fun load() = restAPI.getGoodsList()
     }.asSharedFlow
 }

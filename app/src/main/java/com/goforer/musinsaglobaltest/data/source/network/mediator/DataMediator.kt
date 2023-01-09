@@ -1,8 +1,6 @@
 package com.goforer.musinsaglobaltest.data.source.network.mediator
 
 import androidx.annotation.MainThread
-import androidx.annotation.WorkerThread
-import com.goforer.musinsaglobaltest.data.repository.Repository.Companion.ITEM_COUNT
 import com.goforer.musinsaglobaltest.data.source.network.response.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -17,25 +15,17 @@ import timber.log.Timber
  * You can read more about it in the <a href="https://developer.android.com/arch">Architecture
  * Guide</a>.
  */
-abstract class DataMediator<Response> constructor(
-    viewModelScope: CoroutineScope, private val enabledCache: Boolean
-) {
+abstract class DataMediator<Response> constructor(viewModelScope: CoroutineScope) {
     private val resource by lazy {
         Resource()
     }
 
     internal val asSharedFlow = flow {
         emit(resource.loading(Status.LOADING))
-        clearCache()
         load().collect { apiResponse ->
             when (apiResponse) {
                 is ApiSuccessResponse -> {
-                    if (enabledCache) {
-                        saveToCache(apiResponse.body)
-                        loadFromCache(false, ITEM_COUNT, 1)
-                    } else {
-                        emit(resource.success(apiResponse.body))
-                    }
+                    emit(resource.success(apiResponse.body))
                 }
 
                 is ApiEmptyResponse -> {
@@ -58,19 +48,6 @@ abstract class DataMediator<Response> constructor(
     protected open suspend fun onNetworkError(errorMessage: String, errorCode: Int) {
     }
 
-    @WorkerThread
-    protected open suspend fun saveToCache(value: Response) {
-    }
-
-    @MainThread
-    protected open fun loadFromCache(
-        isLatest: Boolean,
-        itemCount: Int,
-        pages: Int
-    ): Flow<Response>? = null
-
     @MainThread
     protected abstract fun load(): Flow<ApiResponse<Response>>
-
-    protected open suspend fun clearCache() {}
 }

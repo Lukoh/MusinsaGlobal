@@ -29,6 +29,11 @@ open class MediatorStatedViewModel(private val useCase: RepoUseCase, params: Par
 
     fun invalidatePagingSource() = useCase.invalidatePagingSource()
 
+    /**
+     * Hot Flow 인 StateFlow 는 초기 값이 필요하며 Collector 가 수집을 시작하는 즉시 내보냅니다.
+     * 이 StateFLow 를 이용하면 데이터를 항상 볼 수 있도록 마지막으로 내보낸 데이타들을 캐싱 할 수 있습니다.
+     * 즉, StateFlow 는 마지막 데이타들을 저장하고 Collector 가 수집을 시작하자마자 이를 내보냅니다.
+     */
     private val _value = MutableStateFlow(Resource().loading(Status.LOADING))
     val value = _value
 

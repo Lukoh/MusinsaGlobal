@@ -16,12 +16,6 @@ abstract class Repository<Resource> {
     @Inject
     lateinit var networkErrorHandler: NetworkErrorHandler
 
-    companion object {
-        internal const val ITEM_COUNT = 6
-
-        internal const val API_KEY = "dec145755ed77d4e089fe5e284eca7c7"
-    }
-
     abstract fun handle(viewModelScope: CoroutineScope, query: Query): SharedFlow<Resource>
 
     open fun invalidatePagingSource() {}
