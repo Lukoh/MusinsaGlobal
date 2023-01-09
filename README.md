@@ -40,6 +40,8 @@ MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/Advanced
 
 Jetpack 라이브러러인 Compose 학습을 계획하고 있습니다. (2월 초에 현재 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 의 데모앱인 [Weather](https://github.com/Lukoh/Weather)에 적용 시작할 예정입니다.)
 
+추가적으로 Style 컨텐츠에 추천코디 전체를 클릭하면 추천코디의 전체 코디의 리스트를 보여주는 추가 기능도 구현하였습니다.
+
 
 MusinsaGlobal 앱은 [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) Architecture 기반으로 개발된 Android 앱입니다. 또한 Clean Architecture & Clean Code 기반으로 개발되어 있고 앱을 확장하거나 유지보수 용이하고, 개발 생산성을 높일수 있는 구조를 가지고 있습니다. [AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) 기반으로 앱을 개발하면 비지니스 로직과 UI Layout 만 새로 적용하면 여러용도의 서로 다른 앱을 쉽게 안정성 있게, 그리고 빠르게 개발을 할수 았습니다. ([AdvancedAppArchitecture](https://github.com/Lukoh/AdvancedAppArchitecture) Architecture 는 ShareableAsset 앱 과 OHeadline 앱 서비스 개발에도 적용된 Architecture 로써 코드 생산성 & 유지보수 & 확장성 & 호율성에 강점을 가진 Android 앱을 개발하긴 위한 좋은 App Architecture 입니다.)
 
