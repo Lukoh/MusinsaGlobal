@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.goforer.base.extension.*
-import com.goforer.musinsaGlobalTest.databinding.ActivityMainBinding
 import com.goforer.musinsaGlobalTest.databinding.FragmentHomeBinding
 import com.goforer.musinsaglobaltest.data.Params
 import com.goforer.musinsaglobaltest.data.Query
@@ -24,7 +23,6 @@ import com.goforer.musinsaglobaltest.presentation.stateholder.MediatorStatedView
 import com.goforer.musinsaglobaltest.presentation.stateholder.home.GetGoodsListViewModel
 import com.goforer.musinsaglobaltest.presentation.ui.BaseFragment
 import com.goforer.musinsaglobaltest.presentation.ui.home.adapter.DataAdapter
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -84,6 +82,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onStop()
     }
 
+    /**
+     * CurrentState 를 통해서 HomeFragment 가 content 정보들을 새로 로딩 하는것인지 아니면 Reloaded 되는것인지 체크 하여
+     * 현재 content 정보들 보여지게 합니다. content 정보들을 Reloaded 되는 것이면 새로 네트워크 리소스를 사용하여 백엔드 서버로
+     * 부터 다시 content 정보들을 가져 오는 것이 아니라 캐쉬되어 있는 Content 정보들을 가지고 와서 보여지게 합니다.
+     *
+     */
     private fun load() {
         view?.let {
             setLoading(true)
@@ -138,19 +142,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-
+    /**
+     * 현재 Content 정보들을 Event Bus 를 통해서 저장해야 호출된 Fragment 가 종료 되고
+     * 현재 Fragment 가 다시 보여질때 저장된 Content 정보들을 가지고 새로 보여지게 해야 합니다.
+     *
+     * 이 부분은 현재 Content 정보들을 CurrentState 데이터 클래슬 생성해서 현재 Content 정보들을 넣고
+     * Event Bus 를 통해서 포스팅 합니다.
+     * (정확하게는 사용된 ViewModel 을 포스팅 하는것입니다. 이 ViewModel 내 value property 에서
+     * 현재 Content 정보들을 뽑아 올수 있습니다. 이유는 이 ViewModel 내에서 사용된 Flow 가 Hot Flow 인
+     * StateFlow 이기 때문입니다. 이 루틴을 통해서 포스팅 되고 다시 이 Fragment 로 돌아 왔을때 포스팅된 것을
+     * Observing 합니다.)
+     */
     private fun saveContentsState(firstPosition: Int, lastPosition: Int) {
-        /**
-         * 현재 Content 정보들을 Event Bus 를 통해서 저장해야 호출된 Fragment 가 종료 되고
-         * 현재 Fragment 가 다시 보여질때 저장된 Content 정보들을 가지고 새로 보여지게 해야 합니다.
-         *
-         * 이 부분은 현재 Content 정보들을 CurrentState 데이터 클래슬 생성해서 현재 Content 정보들을 넣고
-         * Event Bus 를 통해서 포스팅 합니다.
-         * (정확하게는 사용된 ViewModel 을 포스팅 하는것입니다. 이 ViewModel 내 value property 에서
-         * 현재 Content 정보들을 뽑아 올수 있습니다. 이유는 이 ViewModel 내에서 사용된 Flow 가 Hot Flow 인
-         * StateFlow 이기 때문입니다. 이 루틴을 통해서 포스팅 되고 다시 이 Fragment 로 돌아 왔을때 포스팅된 것을
-         * Observing 합니다.)
-         */
         getGoodsListViewModel?.let {
             createContentsState(it, firstPosition, lastPosition)
             contentState?.let { state ->
@@ -159,6 +162,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    /**
+     * 현재 Content 정보들을 Event Bus 를 통해서 포스팅 하기 위해서 ContentState 인스턴스를 생성합니다.
+     *
+     */
     private fun createContentsState(
         viewModel: MediatorStatedViewModel,
         firstPosition: Int,
@@ -167,6 +174,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         contentState = ContentState(viewModel, firstPosition, lastPosition)
     }
 
+    /**
+     * 벡엔드서버와 통신을 통해서 Content 정보들을 가여오기 위한 ViewModel 을 생성하고 요청을 시작합니다.
+     *
+     */
     private fun createViewModel() : MediatorStatedViewModel {
         val viewModel = GetGoodsListViewModel.provideFactory(
             getGoodsListViewModelFactory, Params(Query())
@@ -177,6 +188,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return viewModel
     }
 
+    /**
+     * 벡엔드서버와 통신을 통해서 받아온 Content 정보들을 보여줍니다.
+     *
+     */
     private fun submitDataList(viewModel: MediatorStatedViewModel, isReloaded: Boolean) {
         view?.let {
             launchAndRepeatWithViewLifecycle {
@@ -241,6 +256,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    /**
+     * Shimmer 라이브러리를 이용하여 리스트 로딩을 보여줍니다.
+     */
     private fun setLoading(enabled: Boolean) {
         lifecycleScope.launch {
             with(binding) {
