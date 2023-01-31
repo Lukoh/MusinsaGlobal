@@ -15,7 +15,7 @@ import timber.log.Timber
  * You can read more about it in the <a href="https://developer.android.com/arch">Architecture
  * Guide</a>.
  */
-abstract class DataMediator<Response> constructor(viewModelScope: CoroutineScope) {
+abstract class DataMediator<Response> constructor(viewModelScope: CoroutineScope, replyCount: Int) {
     private val resource by lazy {
         Resource()
     }
@@ -42,7 +42,7 @@ abstract class DataMediator<Response> constructor(viewModelScope: CoroutineScope
     }.shareIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        replay = 10
+        replay = replyCount
     )
 
     protected open suspend fun onNetworkError(errorMessage: String, errorCode: Int) {

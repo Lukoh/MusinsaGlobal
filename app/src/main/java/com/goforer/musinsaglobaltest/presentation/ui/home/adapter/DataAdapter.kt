@@ -72,6 +72,7 @@ class DataAdapter(
     override fun onViewDetachedFromWindow(holder: BaseViewHolder<Data>) {
         super.onViewDetachedFromWindow(holder)
 
+
         _binding = null
     }
 
