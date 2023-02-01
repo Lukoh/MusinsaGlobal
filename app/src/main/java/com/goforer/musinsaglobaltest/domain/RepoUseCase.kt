@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 abstract class RepoUseCase(open val repository: Repository<Resource>) : UseCase<Resource>() {
     override fun run(viewModelScope: CoroutineScope, params: Params) =
-        repository.handle(viewModelScope, params.query)
+        repository.handle(viewModelScope, params.replyCount, params.query)
 
     fun invalidatePagingSource() = repository.invalidatePagingSource()
 }

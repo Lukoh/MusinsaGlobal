@@ -180,7 +180,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
      */
     private fun createViewModel() : MediatorStatedViewModel {
         val viewModel = GetGoodsListViewModel.provideFactory(
-            getGoodsListViewModelFactory, Params(Query(10))
+            getGoodsListViewModelFactory, Params(1, Query())
         ).create(GetGoodsListViewModel::class.java)
 
         getGoodsListViewModel = viewModel

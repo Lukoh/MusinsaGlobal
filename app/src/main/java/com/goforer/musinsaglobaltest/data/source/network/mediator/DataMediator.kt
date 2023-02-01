@@ -3,10 +3,7 @@ package com.goforer.musinsaglobaltest.data.source.network.mediator
 import androidx.annotation.MainThread
 import com.goforer.musinsaglobaltest.data.source.network.response.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
 /**
@@ -15,7 +12,7 @@ import timber.log.Timber
  * You can read more about it in the <a href="https://developer.android.com/arch">Architecture
  * Guide</a>.
  */
-abstract class DataMediator<Response> constructor(viewModelScope: CoroutineScope, replyCount: Int) {
+abstract class DataMediator<Response> constructor(viewModelScope: CoroutineScope, replyCount: Int = 0) {
     private val resource by lazy {
         Resource()
     }

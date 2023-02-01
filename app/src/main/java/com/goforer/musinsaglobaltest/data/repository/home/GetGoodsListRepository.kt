@@ -13,8 +13,8 @@ import javax.inject.Singleton
 class GetGoodsListRepository
 @Inject
 constructor() : Repository<Resource>() {
-    override fun handle(viewModelScope: CoroutineScope, query: Query) = object :
-        DataMediator<GoodsListResponse>(viewModelScope, query.args[0] as Int) {
+    override fun handle(viewModelScope: CoroutineScope, replyCount: Int, query: Query) = object :
+        DataMediator<GoodsListResponse>(viewModelScope, replyCount) {
         override fun load() = restAPI.getGoodsList()
     }.asSharedFlow
 }

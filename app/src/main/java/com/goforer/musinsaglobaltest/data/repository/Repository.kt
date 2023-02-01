@@ -16,7 +16,7 @@ abstract class Repository<Resource> {
     @Inject
     lateinit var networkErrorHandler: NetworkErrorHandler
 
-    abstract fun handle(viewModelScope: CoroutineScope, query: Query): SharedFlow<Resource>
+    abstract fun handle(viewModelScope: CoroutineScope, replyCount: Int, query: Query): SharedFlow<Resource>
 
     open fun invalidatePagingSource() {}
 
