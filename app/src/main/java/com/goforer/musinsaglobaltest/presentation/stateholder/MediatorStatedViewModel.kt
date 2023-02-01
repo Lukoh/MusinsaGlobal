@@ -8,6 +8,7 @@ import com.goforer.musinsaglobaltest.data.source.network.response.Status
 import com.goforer.musinsaglobaltest.domain.RepoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 open class MediatorStatedViewModel(private val useCase: RepoUseCase, params: Params) : ViewModel() {
@@ -39,7 +40,9 @@ open class MediatorStatedViewModel(private val useCase: RepoUseCase, params: Par
 
     init {
         viewModelScope.launch {
-            useCase.run(viewModelScope, params).collectLatest {
+            useCase.run(viewModelScope, params).distinctUntilChanged { old, new ->
+                old != new
+            } .collectLatest {
                 _value.value = it
             }
         }

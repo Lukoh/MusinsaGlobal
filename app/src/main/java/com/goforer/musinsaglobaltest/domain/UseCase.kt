@@ -2,6 +2,7 @@ package com.goforer.musinsaglobaltest.domain
 
 import com.goforer.musinsaglobaltest.data.Params
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Singleton
 
@@ -12,5 +13,5 @@ import javax.inject.Singleton
 
 @Singleton
 abstract class UseCase<Value> {
-    abstract fun run(viewModelScope: CoroutineScope, params: Params): SharedFlow<Value>
+    abstract fun run(viewModelScope: CoroutineScope, params: Params): Flow<Value>
 }
