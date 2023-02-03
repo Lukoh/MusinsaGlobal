@@ -242,10 +242,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
      *  StateFlow 는 마지막으로 내보낸 항목을 캐시 하고 있기 때문입니다,
      *
      *  PS : 버퍼링이 필요할 경우는 Shared Flow 를 사용하면 됩니다.
+     *
+     *  repeatOnLifecycle API 적용 - 백그라운드 상태일 경우 다시 콘텐츠들을 로드 할 필요가 없고, 리소스 낭비 및
+     *  앱 Crash 에방을 위해서 적용
+     *  적용이유:
+     *  The Lifecycle.repeatOnLifecycle API was primarily born to allow safer Flow collection from
+     *  the UI layer in Android. Its restartable behavior, that takes into consideration
+     *  the UI lifecycle, makes it the perfect default API to process items only when the UI is
+     *  visible on the screen.
      */
     private fun reloadContents(contentState: ContentState) {
         view?.let {
-            viewLifecycleOwner.lifecycleScope.launch {
+            launchAndRepeatWithViewLifecycle {
                 getGoodsListViewModel = contentState.viewModel as GetGoodsListViewModel
                 lastPosition = contentState.lastVisibleItemPos
                 setLoading(enabled = false)

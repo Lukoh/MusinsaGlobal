@@ -42,7 +42,7 @@ open class MediatorStatedViewModel(private val useCase: RepoUseCase, params: Par
         viewModelScope.launch {
             useCase.run(viewModelScope, params).distinctUntilChanged { old, new ->
                 old != new
-            } .collectLatest {
+            }.collectLatest {
                 _value.value = it
             }
         }
